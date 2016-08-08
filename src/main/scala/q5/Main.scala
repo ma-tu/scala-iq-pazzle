@@ -11,10 +11,14 @@ object Main extends App {
         List.empty
       } else {
         val coin = coins.head
-        val maxCount = List(money / coin, remain).min
-        (0 to maxCount).flatMap(count => {
-          change(combination ++: List.empty.padTo(count, coin), money - coin * count, coins.tail, remain - count)
-        }).toList
+        val count = money / coin
+        if (count > remain) {
+          List.empty
+        } else {
+          (0 to count).flatMap(coinCount => {
+            change(combination ++: List.empty.padTo(coinCount, coin), money - coin * coinCount, coins.tail, remain - coinCount)
+          }).toList
+        }
       }
     }
   }
